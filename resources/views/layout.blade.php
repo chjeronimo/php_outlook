@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>PHP Outlook Sample</title>
+		<title>PHP Outlook</title>
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
 		<link rel="stylesheet" href="{{ asset('/css/app.css') }}">
@@ -16,7 +16,7 @@
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</button>
-					<a class="navbar-brand" href="#">PHP Outlook Sample</a>
+					<a class="navbar-brand" href="#">PHP Outlook</a>
 				</div>
 				<div id="navbar" class="navbar-collapse collapse">
 					<ul class="nav navbar-nav">
@@ -25,11 +25,11 @@
 						<li class="<?php echo ($_SERVER['REQUEST_URI'] == '/calendar' ? 'active' : '');?>"><a href="/calendar">Calendar</a></li>
 						<li class="<?php echo ($_SERVER['REQUEST_URI'] == '/contacts' ? 'active' : '');?>"><a href="/contacts">Contacts</a></li>
 					</ul>
-					<?php if(isset($username)) { ?>
-					<ul class="nav navbar-nav navbar-right">
-						<li><p class="navbar-text">Hello <?php echo $username ?>!</p></li>
-					</ul>
-					<?php } ?>
+					@if (isset($username))
+						<ul class="nav navbar-nav navbar-right">
+							<li><p class="navbar-text">Hello {{ $username }}!</p></li>
+						</ul>
+					@endif
 				</div><!--/.nav-collapse -->
 			</div>
 		</nav>

@@ -73,9 +73,9 @@ class OutlookController extends Controller
 			// // Only return Subject, Start, and End fields
 			"\$select" => "subject,start,end",
 			// Sort by Start, oldest first
-			"\$orderby" => "Start/DateTime",
+			"\$orderby" => "Start/DateTime"
 			// Return at most 10 results
-			"\$top" => "10"
+			// "\$top" => "10"
 		);
 
 		$getEventsUrl = '/me/events?'.http_build_query($eventsQueryParams);
@@ -83,10 +83,10 @@ class OutlookController extends Controller
 		->setReturnType(Model\Event::class)
 		->execute();
 
-		return view('calendar', array(
-			'username' => $user->getDisplayName(),
-			'events' => $events
-		));
+		$calendar = $this->events($events);
+		// dd($calendar);
+
+		return view('calendar', compact('calendar'));
 	}
 
 	public function contacts() 
@@ -122,5 +122,27 @@ class OutlookController extends Controller
 			'username' => $user->getDisplayName(),
 			'contacts' => $contacts
 		));
+	}
+
+	public function events($events_outlook)
+	{
+		$events = [];
+
+		foreach ($events_outlook as $value) {
+			$events[] = \Calendar::event(
+				$value->getSubject(), //event title
+				false, //full day event?
+				$value->getStart()->getDateTime(), //start time (you can also use Carbon instead of DateTime)
+				$value->getEnd()->getDateTime(), //end time (you can also use Carbon instead of DateTime)
+				$value->getId() //optionally, you can specify an event ID
+			);
+		}
+
+		$calendar = \Calendar::addEvents($events) //add an array with addEvents
+			->setOptions([ //set fullcalendar options
+				'firstDay' => 1
+			]);
+
+		return $calendar;
 	}
 }

@@ -5,11 +5,10 @@
 		<div class="panel-heading">
 			<h1 class="panel-title">Calendar</h1>
 		</div>
-		<div class="panel-body">
-			Here are the 10 oldest events in your calendar.
-		</div>
 		<div class="list-group">
-			@if (isset($events))
+			{!! $calendar->calendar() !!}
+			{!! $calendar->script() !!}
+			{{-- @if (isset($events))
 				@foreach($events as $event)
 					<div class="list-group-item">
 						<h3 class="list-group-item-heading">{{ $event->getSubject() }}</h3>
@@ -17,7 +16,7 @@
 						<p class="list-group-item-heading text-muted">End: {{ (new DateTime($event->getEnd()->getDateTime()))->format(DATE_RFC822) }}</p>
 					</div>
 				@endforeach
-			@endif
+			@endif --}}
 		</div>
 	</div>
 @endsection
